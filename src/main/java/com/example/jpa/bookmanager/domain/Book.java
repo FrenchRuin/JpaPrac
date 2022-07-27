@@ -1,9 +1,14 @@
 package com.example.jpa.bookmanager.domain;
 
 
+import com.example.jpa.bookmanager.domain.listener.Auditable;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.apache.tomcat.jni.Local;
+import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,9 +16,9 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @Data
-@EntityListeners(value = MyEntityListner.class)
-
-public class Book implements Auditable{
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
+public class Book extends BaseEntity {
 
     @Id
     @GeneratedValue
@@ -21,20 +26,10 @@ public class Book implements Auditable{
 
     private String name;
 
-    private String author;
+    private String category;
 
-    private LocalDateTime createdAt;
+    private Long authorId;
 
-    private LocalDateTime updatedAt;
+    private Long publisherId;
 
-//    @PrePersist
-//    public void prePersist() {
-//        this.createdAt = LocalDateTime.now();
-//        this.updatedAt = LocalDateTime.now();
-//    }
-//
-//    @PreUpdate
-//    public void preUpdate() {
-//        this.updatedAt = LocalDateTime.now();
-//    }
 }

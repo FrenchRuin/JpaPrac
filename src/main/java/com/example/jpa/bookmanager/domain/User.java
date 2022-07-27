@@ -1,7 +1,11 @@
 package com.example.jpa.bookmanager.domain;
 
-import jdk.nashorn.internal.objects.annotations.Constructor;
+import com.example.jpa.bookmanager.domain.listener.Auditable;
+import com.example.jpa.bookmanager.domain.listener.UserEntityListener;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,11 +15,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Data
 @Entity
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @Builder
 @RequiredArgsConstructor
-@EntityListeners(value = {MyEntityListner.class, UserEntityListener.class})
-//@Table(name = "user", indexes = {@Index(columnList = "name")}, uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
-public class User implements Auditable {
+@EntityListeners(value =  UserEntityListener.class)
+public class User extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,14 +35,15 @@ public class User implements Auditable {
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
 
-    //   @Column(updatable = false)
-    private LocalDateTime createdAt;
+//    @Column(updatable = false)
+//    @CreatedDate
+//    private LocalDateTime createdAt;
 
-    //    @Column(insertable = false)
-    private LocalDateTime updatedAt;
-
-    @Transient
-    private String testData;
+//    @LastModifiedDate
+//    private LocalDateTime updatedAt;
+//
+//    @Transient
+//    private String testData;
 
 //    @PrePersist
 //    public void prePersist() {

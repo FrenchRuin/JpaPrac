@@ -139,7 +139,7 @@ class UserRepositoryTest {
 
     @DisplayName("5. userHistoryTest")
     @Test
-    void uht(){
+    void userHistoryTest(){
         User user = new User();
         user.setEmail("martin-new@fastcampus.com");
         user.setName("martin-new");
