@@ -13,9 +13,9 @@ import java.time.LocalDateTime;
 @Entity
 @Builder
 @RequiredArgsConstructor
-@EntityListeners(value = MyEntityListner.class)
+@EntityListeners(value = {MyEntityListner.class, UserEntityListener.class})
 //@Table(name = "user", indexes = {@Index(columnList = "name")}, uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
-public class User implements Auditable{
+public class User implements Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,10 +30,10 @@ public class User implements Auditable{
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
 
- //   @Column(updatable = false)
+    //   @Column(updatable = false)
     private LocalDateTime createdAt;
 
-//    @Column(insertable = false)
+    //    @Column(insertable = false)
     private LocalDateTime updatedAt;
 
     @Transient
@@ -49,7 +49,6 @@ public class User implements Auditable{
 //    public void preUpdate() {
 //        this.updatedAt = LocalDateTime.now();
 //    }
-
 
 
 }
