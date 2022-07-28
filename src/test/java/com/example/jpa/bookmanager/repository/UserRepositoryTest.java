@@ -2,6 +2,7 @@ package com.example.jpa.bookmanager.repository;
 
 import com.example.jpa.bookmanager.domain.Gender;
 import com.example.jpa.bookmanager.domain.User;
+import com.example.jpa.bookmanager.domain.UserHistory;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.contains;
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.endsWith;
@@ -109,7 +111,7 @@ class UserRepositoryTest {
 
     @DisplayName("5. prePersistTest")
     @Test
-    void test_5(){
+    void test_5() {
 
         User user = new User();
         user.setEmail("martin2@fastcampus.com");
@@ -125,7 +127,7 @@ class UserRepositoryTest {
 
     @DisplayName("preUpdateTest ")
     @Test
-    void test_8(){
+    void test_8() {
         User user = userRepository.findById(1L).orElseThrow(RuntimeException::new);
 
         System.out.println("as-is : " + user);
@@ -139,7 +141,7 @@ class UserRepositoryTest {
 
     @DisplayName("5. userHistoryTest")
     @Test
-    void userHistoryTest(){
+    void userHistoryTest() {
         User user = new User();
         user.setEmail("martin-new@fastcampus.com");
         user.setName("martin-new");
@@ -151,5 +153,31 @@ class UserRepositoryTest {
 
         userHistoryRepository.findAll().forEach(System.out::println);
     }
+
+
+    @DisplayName("2. userRelationTest")
+    @Test
+    void userRelationTest() {
+        User user = new User();
+        user.setName("david");
+        user.setEmail("david@fastcampus.com");
+        user.setGender(Gender.MALE);
+
+        userRepository.save(user);
+
+        user.setName("daniel");
+        userRepository.save(user);
+
+        user.setEmail("daniel@fastcampus.com");
+        userRepository.save(user);
+
+//        userHistoryRepository.findAll().forEach(System.out::println);
+
+
+        List<UserHistory> result = userRepository.findByEmail("daniel@fastcampus.com").getUserHistories();
+
+        result.forEach(System.out::println);
+    }
+
 
 }

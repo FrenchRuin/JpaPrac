@@ -1,14 +1,11 @@
 package com.example.jpa.bookmanager.domain;
 
-import com.example.jpa.bookmanager.domain.listener.Auditable;
 import com.example.jpa.bookmanager.domain.listener.UserEntityListener;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @NoArgsConstructor
@@ -19,7 +16,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Builder
 @RequiredArgsConstructor
-@EntityListeners(value =  UserEntityListener.class)
+@EntityListeners(value = UserEntityListener.class)
 public class User extends BaseEntity {
 
     @Id
@@ -35,26 +32,7 @@ public class User extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
 
-//    @Column(updatable = false)
-//    @CreatedDate
-//    private LocalDateTime createdAt;
-
-//    @LastModifiedDate
-//    private LocalDateTime updatedAt;
-//
-//    @Transient
-//    private String testData;
-
-//    @PrePersist
-//    public void prePersist() {
-//        this.createdAt = LocalDateTime.now();
-//        this.updatedAt = LocalDateTime.now();
-//    }
-//
-//    @PreUpdate
-//    public void preUpdate() {
-//        this.updatedAt = LocalDateTime.now();
-//    }
-
-
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private List<UserHistory> userHistories = new ArrayList<>();
 }
