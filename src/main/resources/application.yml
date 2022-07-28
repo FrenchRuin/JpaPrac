@@ -1,8 +1,10 @@
 spring:
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:8ccfa947-3229-47aa-ad60-9ca5a29fbeca;MODE=MySQL
-
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/book_manager
+    username: root
+    password: 1111
+    initialization-mode: always
   h2:
     console:
       enabled: true
@@ -11,6 +13,9 @@ spring:
     properties:
       hibernate:
         format_sql: true
+    generate-ddl: false
+
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
+
 
