@@ -8,7 +8,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -108,6 +111,35 @@ public class BookRepositoryTest {
 //        bookRepository.findAllByDeletedFalse().forEach(System.out::println);
 //        bookRepository.findByCategoryIsNullAndDeletedFalse().forEach(System.out::println);
 
+    }
+
+
+    @DisplayName("4. QueryTest")
+    @Test
+    void test_4(){
+        System.out.println("findByCategoryIsNullAndNameEqualsAndCreatedAtGreaterThanEqualAndUpdatedAtGreaterThanEqual : " + bookRepository.findByCategoryIsNullAndNameEqualsAndCreatedAtGreaterThanEqualAndUpdatedAtGreaterThanEqual(
+                "JPA 초격차 패키지",
+                LocalDateTime.now().minusDays(1L),
+                LocalDateTime.now().minusDays(1L)
+        ));
+
+        System.out.println("findByNameRecently : " + bookRepository.findByNameRecently(
+                "JPA 초격차 패키지",
+                LocalDateTime.now().minusDays(1L),
+                LocalDateTime.now().minusDays(1L)
+                ));
+
+        System.out.println(bookRepository.findByBookNameAndCategory());
+
+        bookRepository.findByBookNameAndCategory().forEach(b -> System.out.println(b.getName()+ " : " + b.getCategory()));
+
+        bookRepository.findByBookNameAndCategory(PageRequest.of(1, 1)).forEach(
+                bookNameAndCategory -> System.out.println(bookNameAndCategory.getName() + " : " + bookNameAndCategory.getCategory())
+        );
+
+        bookRepository.findByBookNameAndCategory(PageRequest.of(0, 1)).forEach(
+                bookNameAndCategory -> System.out.println(bookNameAndCategory.getName() + " : " + bookNameAndCategory.getCategory())
+        );
     }
 
 
