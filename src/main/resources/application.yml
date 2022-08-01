@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/book_manager
+    url: jdbc:mysql://localhost:3306/bookmanager
     username: root
-    password: 1111
+    password: as2646
     initialization-mode: always
   h2:
     console:
