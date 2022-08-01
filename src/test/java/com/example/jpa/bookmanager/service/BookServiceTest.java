@@ -1,5 +1,6 @@
 package com.example.jpa.bookmanager.service;
 
+import com.example.jpa.bookmanager.domain.Book;
 import com.example.jpa.bookmanager.repository.AuthorRepository;
 import com.example.jpa.bookmanager.repository.BookRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -27,7 +28,7 @@ class BookServiceTest {
     void test_1(){
         try {
             bookService.putBookAndAuthor();
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             System.out.println(">>>> " + e.getMessage());
 
         }
@@ -36,5 +37,21 @@ class BookServiceTest {
         System.out.println("authors : " + authorRepository.findAll());
 
     }
+
+    @DisplayName("2. isolationTest")
+    @Test
+    void test_2(){
+
+        Book book = new Book();
+        book.setName("JPA 강의");
+
+        bookRepository.save(book);
+
+        bookService.get(1L);
+
+      System.out.println(">>>> :" + bookRepository.findAll());
+
+    }
+
 
 }
