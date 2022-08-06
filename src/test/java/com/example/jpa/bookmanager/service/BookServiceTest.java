@@ -34,5 +34,14 @@ class BookServiceTest {
 
     }
 
+    @DisplayName("1. converterErrorTest")
+    @Test
+    void test_5(){
+        bookService.getAll();
+
+        bookRepository.findAll().forEach(System.out::println);
+    }
+
+
 
 }

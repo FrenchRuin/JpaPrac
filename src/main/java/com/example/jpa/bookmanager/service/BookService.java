@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class BookService {
@@ -29,5 +31,14 @@ public class BookService {
         authorRepository.save(author);
 
         throw new RuntimeException("오류가 나서 DB commit이 발생하지 않습니다.");
+    }
+
+    @Transactional
+    public List<Book> getAll() {
+        List<Book> books = bookRepository.findAll();
+
+        books.forEach(System.out::println);
+
+        return books;
     }
 }

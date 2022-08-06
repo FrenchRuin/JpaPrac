@@ -4,6 +4,7 @@ import com.example.jpa.bookmanager.domain.Book;
 import com.example.jpa.bookmanager.domain.Publisher;
 import com.example.jpa.bookmanager.domain.Review;
 import com.example.jpa.bookmanager.domain.User;
+import com.example.jpa.bookmanager.repository.dto.BookStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -165,6 +166,18 @@ public class BookRepositoryTest {
         System.out.println(bookRepository.showTables());
     }
 
+    @Test
+    void converterTest() {
+        bookRepository.findAll().forEach(System.out::println);
+
+//        Book book = new Book();
+//        book.setName("또다른 전문서적");
+//        book.setStatus(new BookStatus(200));
+//
+//        bookRepository.save(book);
+
+        bookRepository.findAll().forEach(System.out::println);
+    }
 
 
 
