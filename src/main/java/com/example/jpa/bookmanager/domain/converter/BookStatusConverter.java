@@ -8,6 +8,7 @@ import javax.persistence.Converter;
 
 @Converter
 public class BookStatusConverter implements AttributeConverter<BookStatus, Integer> {
+
     @Override
     public Integer convertToDatabaseColumn(BookStatus attribute) {
         return attribute.getCode();
@@ -18,3 +19,5 @@ public class BookStatusConverter implements AttributeConverter<BookStatus, Integ
         return dbData != null ? new BookStatus(dbData) : null;
     }
 }
+
+

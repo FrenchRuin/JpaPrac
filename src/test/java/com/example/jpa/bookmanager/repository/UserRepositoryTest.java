@@ -1,5 +1,6 @@
 package com.example.jpa.bookmanager.repository;
 
+import com.example.jpa.bookmanager.domain.Address;
 import com.example.jpa.bookmanager.domain.Gender;
 import com.example.jpa.bookmanager.domain.User;
 import com.example.jpa.bookmanager.domain.UserHistory;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -29,6 +31,9 @@ class UserRepositoryTest {
 
     @Autowired
     private UserHistoryRepository userHistoryRepository;
+
+    @Autowired
+    private EntityManager entityManager;
 
     @DisplayName("1. CRUD ")
     @Test
@@ -80,18 +85,18 @@ class UserRepositoryTest {
         userRepository.save(user2);
     }
 
-    @DisplayName("4. ENUM")
-    @Test
-    void test_4() {
-        User user = userRepository.findById(1L).orElseThrow(RuntimeException::new);
-        user.setGender(Gender.MALE);
-
-        userRepository.save(user);
-
-        userRepository.findAll().forEach(System.out::println);
-
-        System.out.println(userRepository.findRowRecord().get("gender"));
-    }
+//    @DisplayName("4. ENUM")
+//    @Test
+//    void test_4() {
+//        User user = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+//        user.setGender(Gender.MALE);
+//
+//        userRepository.save(user);
+//
+//        userRepository.findAll().forEach(System.out::println);
+//
+//        System.out.println(userRepository.findRowRecord().get("gender"));
+//    }
 
     @DisplayName("listner test")
     @Test
@@ -156,31 +161,79 @@ class UserRepositoryTest {
     }
 
 
-    @DisplayName("2. userRelationTest")
+//    @DisplayName("2. userRelationTest")
+//    @Test
+//    void userRelationTest() {
+//        User user = new User();
+//        user.setName("david");
+//        user.setEmail("david@fastcampus.com");
+//        user.setGender(Gender.MALE);
+//
+//        userRepository.save(user);
+//
+//        user.setName("daniel");
+//        userRepository.save(user);
+//
+//        user.setEmail("daniel@fastcampus.com");
+//        userRepository.save(user);
+//
+//        userHistoryRepository.findAll().forEach(System.out::println);
+//
+//
+//        List<UserHistory> result = userRepository.findByEmail("daniel@fastcampus.com").getUserHistories();
+//
+//        result.forEach(System.out::println);
+//
+//        System.out.println("UserHistory getUSer() :" + userHistoryRepository.findAll().get(0).getUser());
+//    }
+
+
+
+
+    @DisplayName("1. embedTest")
     @Test
-    void userRelationTest() {
+    void test_1(){
+        userRepository.findAll().forEach(System.out::println);
+
         User user = new User();
-        user.setName("david");
-        user.setEmail("david@fastcampus.com");
-        user.setGender(Gender.MALE);
+        user.setName("steve");
+        user.setHomeAddress(new Address("서울시", "강서구", "우장산로2길 25", "763487"));
+        user.setCompanyAddress(new Address("서울시", "마곡동", "퀸즈파크A동", "347894"));
 
         userRepository.save(user);
 
-        user.setName("daniel");
-        userRepository.save(user);
+        User user1 = new User();
+        user1.setName("joshua");
+        user1.setHomeAddress(null);
+        user1.setCompanyAddress(null);
+        userRepository.save(user1);
 
-        user.setEmail("daniel@fastcampus.com");
-        userRepository.save(user);
+        User user2 = new User();
+        user2.setName("jordan");
+        user2.setHomeAddress(new Address());
+        user2.setCompanyAddress(new Address());
+        userRepository.save(user2);
 
+        entityManager.clear();
+
+        userRepository.findAll().forEach(System.out::println);
         userHistoryRepository.findAll().forEach(System.out::println);
 
-
-        List<UserHistory> result = userRepository.findByEmail("daniel@fastcampus.com").getUserHistories();
-
-        result.forEach(System.out::println);
-
-        System.out.println("UserHistory getUSer() :" + userHistoryRepository.findAll().get(0).getUser());
+//        userRepository.findAllRawRecord().forEach(a -> System.out.println(a.values()));
     }
 
+    @DisplayName("1. embedTest")
+    @Test
+    void asdg(){
 
+        User user = new User();
+        user.setName("steve");
+        user.setHomeAddress(new Address("서울시", "강서구", "우장산로2길 25", "763487"));
+        user.setCompanyAddress(new Address("서울시", "마곡동", "퀸즈파크A동", "347894"));
+
+        userRepository.save(user);
+
+        userRepository.findAll().forEach(System.out::println);
+
+    }
 }

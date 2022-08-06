@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-public interface UserRepository extends JpaRepository<User,Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
     Set<User> findByName(String name);
 
@@ -31,5 +31,9 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     @Query(value = "select * from user limit 1;", nativeQuery = true)
     Map<String, Object> findRowRecord();
+
+
+    @Query(value = "select * from user",nativeQuery = true)
+    List<Map<String, Object>> findAllRawRecord();
 
 }
