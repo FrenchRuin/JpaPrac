@@ -3,7 +3,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/bookmanager
     username: root
-    password: as2646
+    password: 1111
     initialization-mode: always
   h2:
     console:
