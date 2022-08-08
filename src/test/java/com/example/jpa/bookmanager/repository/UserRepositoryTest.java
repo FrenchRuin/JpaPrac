@@ -19,6 +19,8 @@ import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.contains;
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.endsWith;
 
@@ -214,26 +216,17 @@ class UserRepositoryTest {
         user2.setCompanyAddress(new Address());
         userRepository.save(user2);
 
-        entityManager.clear();
+//        entityManager.clear();
 
         userRepository.findAll().forEach(System.out::println);
         userHistoryRepository.findAll().forEach(System.out::println);
 
-//        userRepository.findAllRawRecord().forEach(a -> System.out.println(a.values()));
+        userRepository.findAllRawRecord().forEach(a -> System.out.println(a.values()));
+
+        assertAll(
+                () -> assertThat(userRepository.findById(7L).get().getHomeAddress()).isNull(),
+                () -> assertThat(userRepository.findById(8L).get().getHomeAddress()).isInstanceOf(Address.class)
+        );
     }
 
-    @DisplayName("1. embedTest")
-    @Test
-    void asdg(){
-
-        User user = new User();
-        user.setName("steve");
-        user.setHomeAddress(new Address("서울시", "강서구", "우장산로2길 25", "763487"));
-        user.setCompanyAddress(new Address("서울시", "마곡동", "퀸즈파크A동", "347894"));
-
-        userRepository.save(user);
-
-        userRepository.findAll().forEach(System.out::println);
-
-    }
 }
