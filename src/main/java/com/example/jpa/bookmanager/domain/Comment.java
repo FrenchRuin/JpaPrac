@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @Data
 @ToString(callSuper = true)
 @DynamicInsert
+@DynamicUpdate
 @EqualsAndHashCode(callSuper = true)
 public class Comment extends BaseEntity {
 
